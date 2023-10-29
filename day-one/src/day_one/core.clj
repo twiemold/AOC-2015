@@ -10,12 +10,24 @@
     ))
 
 ;; part two
-;;(defn find_basement [func position floor]
-  ;;(case floor
-    ;;-1
+(defn match_brace [brace]
+  (case brace
+    \( 1
+    \) -1))
+
+(defn find_basement [braces position floor]
+  (let [x (+ (match_brace (first braces)) floor)]
+  (case x
+   ;; skipping base case since we know there is a solution
+    -1 position
+    (recur (rest braces) (+ 1 position) x))))
+
+
 
 (defn -main
   [& args]
   ;; part one
-  (println "The floor is: " (reduce + (count_braces (slurp "input.txt") '())))
+  ;; (println "The floor is:" (reduce + (count_braces (slurp "input.txt") '())))
+  ;; part two
+  (println "The position when he reaches the basement is:" (find_basement (slurp "input.txt") 1 0))
   )
