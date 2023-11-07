@@ -20,8 +20,8 @@
 
 ;; part two
 (defn calc-ribbon-length
-  [[l w h]]
-  (+ (reduce * [l w h]) (reduce + (map (partial * 2) (take 2 (sort [l w h]))))))
+  [sides]
+  (+ (reduce * sides) (reduce + (map (partial * 2) (take 2 (sort sides))))))
 
 
 (defn -main
