@@ -23,10 +23,18 @@
   [sides]
   (+ (reduce * sides) (reduce + (map (partial * 2) (take 2 (sort sides))))))
 
+(defn calc-ribbon-length* []
+  (->> (slurp "input.txt")
+       (re-seq #"\d+")
+       (map #(Integer/parseInt %))
+       (partition 3)
+       (map #(+ (reduce * %) (reduce + (map (partial * 2) (take 2 (sort %))))))
+       (reduce +)))
+
 
 (defn -main
   [& args]
   ;; part one
   ;; (println "They should order this many sq ft:" (reduce + (map #(calc_surface_area %) (get-data "input.txt" process-func)))))
   ;; part two
-  (println "They should order this many ft of ribbon:" (reduce + (map #(calc-ribbon-length %) (get-data "input.txt" process-func)))))
+  (println "They should order this many ft of ribbon:" (calc-ribbon-length*)))
