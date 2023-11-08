@@ -23,6 +23,7 @@
   [sides]
   (+ (reduce * sides) (reduce + (map (partial * 2) (take 2 (sort sides))))))
 
+;; part two, threading macro
 (defn calc-ribbon-length* []
   (->> (slurp "input.txt")
        (re-seq #"\d+")
