@@ -16,12 +16,12 @@
 
 ;; part two
 (defn merge-coords [instructions]
-  (let [robo-santa (unique-coords (take-nth 2 instructions) '(0 0) (set '()))]
-    (let [santa (unique-coords (take-nth 2 (rest instructions)) '(0 0) (set '()))]
+  (let [robo-santa (unique-coords (take-nth 2 instructions) '(0 0) (set '(0 0)))]
+    (let [santa (unique-coords (take-nth 2 (rest instructions)) '(0 0) (set '(0 0)))]
       (set/union robo-santa santa))))
 
 (defn -main
   [& args]
   ;; part one
-  ;; (println "The count of houses visited at least once is:" (count (unique-coords (into [] (slurp "input.txt")) '(0 0) (set '()))))
+  ;; (println "The count of houses visited at least once is:" (count (unique-coords (into [] (slurp "input.txt")) '(0 0) (set '(0 0)))))
   (println "The count of houses visited at least once is:" (count (merge-coords (into [] (slurp "input.txt"))))))
