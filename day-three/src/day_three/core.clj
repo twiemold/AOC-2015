@@ -1,8 +1,9 @@
 (ns day-three.core
+  (:require [clojure.set :as set])
   (:gen-class))
 
 ;; part one
-(defn count-unique-coords
+(defn unique-coords
   [direction curr coords]
   (if (empty? direction) 
     coords
@@ -13,8 +14,14 @@
         \< (recur (rest direction) (list (- x 1) y) (conj coords (list (- x 1) y)))
         \v (recur (rest direction) (list x (- y 1)) (conj coords (list x (- y 1))))))))
 
+;; part two
+(defn merge-coords [instructions]
+  (let [robo-santa (unique-coords (take-nth 2 instructions) '(0 0) (set '()))]
+    (let [santa (unique-coords (take-nth 2 (rest instructions)) '(0 0) (set '()))]
+      (set/union robo-santa santa))))
 
 (defn -main
-  "I don't do a whole lot ... yet."
   [& args]
-  (println "The count of houses visited at least once is:" (count (count-unique-coords (into [] (slurp "input.txt")) '(0 0) (set '())))))
+  ;; part one
+  ;; (println "The count of houses visited at least once is:" (count (unique-coords (into [] (slurp "input.txt")) '(0 0) (set '()))))
+  (println "The count of houses visited at least once is:" (count (merge-coords (into [] (slurp "input.txt"))))))
