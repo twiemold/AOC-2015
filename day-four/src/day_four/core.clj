@@ -11,7 +11,7 @@
 
 ;; part one
 (defn find-lowest-num [secret-key, num]
-  (if (re-find #"^[0]{5}" (md5 (apply str [secret-key (str num)])))
+  (if (re-find #"^[0]{6}" (md5 (apply str [secret-key (str num)])))
     num
     (recur secret-key (+ num 1))))
 
