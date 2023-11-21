@@ -8,6 +8,12 @@
        (filter #(re-seq #"(.)\1+" %))
        (count)))
 
+(defn count-nice-strings-v2* [data]
+  (->> (re-seq #"\w+" data)
+       (filter #(re-seq #"(.).\1+" %))
+       (filter #(re-seq #"(.{2})\w*\1+" %))
+       (count)))
+
 (defn -main
   [& args]
-  (println (count-nice-strings* (slurp "input.txt"))))
+  (println (count-nice-strings-v2* (slurp "input.txt"))))
