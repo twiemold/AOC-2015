@@ -3,25 +3,25 @@
   (:gen-class))
 
 ;; part one
-(defn unique-coords
-  [direction curr coords]
+(defn unique-coords [[direction x y coords]]
   (if (empty? direction) 
     coords
-    (let [[x y] curr]
-      (case (first direction)
-        \^ (recur (rest direction) (list x (+ y 1)) (conj coords (list x (+ y 1))))
-        \> (recur (rest direction) (list (- x 1) y) (conj coords (list (- x 1) y)))
-        \< (recur (rest direction) (list (+ x 1) y) (conj coords (list (+ x 1) y)))
-        \v (recur (rest direction) (list x (- y 1)) (conj coords (list x (- y 1))))))))
+    (case (first direction)
+        \^ (recur [(rest direction) x (+ y 1) (conj coords [x (+ y 1)])])
+        \> (recur [(rest direction) (- x 1) y (conj coords [(- x  1) y])])
+        \< (recur [(rest direction) (+ x 1) y (conj coords [(+ x  1) y])])
+        \v (recur [(rest direction) x (- y 1) (conj coords [x (- y 1)])]))))
 
 ;; part two
 (defn merge-coords [instructions]
-  (let [robo-santa (unique-coords (take-nth 2 instructions) '(0 0) (set '()))]
-    (let [santa (unique-coords (take-nth 2 (rest instructions)) '(0 0) (set '()))]
-      (set/union robo-santa santa))))
+  (let [robo-santa (unique-coords [(take-nth 2 instructions) 0 0 #{}])
+        santa (unique-coords [(take-nth 2 (rest instructions)) 0 0 #{}])]
+    (set/union robo-santa santa)))
 
 (defn -main
-  [& args]
+  []
   ;; part one
-  (println "The count of houses visited at least once is:" (count (unique-coords (into [] (slurp "input.txt")) '(0 0) (set '()))))
-  (println "The count of houses visited at least once is:" (count (merge-coords (into [] (slurp "input.txt"))))))
+  (println "The count of houses visited at least once is:"
+           (count (unique-coords [(slurp "input.txt") 0 0 #{}])))
+  (println "The count of houses visited at least once is:"
+           (count (merge-coords (slurp "input.txt")))))
